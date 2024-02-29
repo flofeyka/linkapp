@@ -1,12 +1,11 @@
-import express, {Response} from "express";
-import {DataBase, profileType, RequestParamsBody} from "../types/types";
-import {profileFollowModel, profileUserIdModel} from "../types/models/profileInputModel";
-import {HTTP_STATUSES} from "../utils/utils";
 
-export const actionWithUserRoutes = (db: DataBase) => {
+const express = require("express");
+const HTTP_STATUSES = require("../utils/utils");
+
+export const actionWithUserRoutes = (db) => {
     const router = express.Router();
 
-    router.put("/:userId", (req: RequestParamsBody<profileUserIdModel, profileFollowModel>, res: Response) => {
+    router.put("/:userId", (req, res) => {
         const ProfileFound: any = db.profiles.find(profile => profile.userId === +req.params.userId);
         if(req.body.follow) {
             ProfileFound.followed = req.body.follow;
