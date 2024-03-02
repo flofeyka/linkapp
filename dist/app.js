@@ -10,6 +10,8 @@ const users_1 = require("./routes/users");
 const profile_1 = require("./routes/profile");
 const actionWithUser_1 = require("./routes/actionWithUser");
 const database_1 = require("./db/database");
+function authGuardMiddleWare(req, res, next) {
+}
 exports.app = (0, express_1.default)();
 const parserMiddleware = (0, body_parser_1.default)({});
 exports.app.use(parserMiddleware);
