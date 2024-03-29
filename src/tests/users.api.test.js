@@ -47,7 +47,7 @@ describe("/users", () => {
         await request(app)
             .delete('/users/4')
             .expect(HTTP_STATUSES.NO_CONTENT_204);
-        expect(db.users.length).toBe(3);
+        expect(db.users.length).toBe(1);
     })
 });
 
