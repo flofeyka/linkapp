@@ -31,10 +31,10 @@ exports.usersService = {
     }),
     createUser: (fullName, login, email, password) => __awaiter(void 0, void 0, void 0, function* () {
         if ((yield users_repository_1.usersRepository.__getUserByDomain(login)) || (yield users_repository_1.usersRepository.__getUserByLogin(login))) {
-            return "Login already exists";
+            return undefined;
         }
-        else if (yield users_repository_1.usersRepository.__getUserByEmail(email)) {
-            return "E-mail already exists";
+        else if (yield users_repository_1.usersRepository.__getUserByLoginOrEmail(email)) {
+            return undefined;
         }
         const passwordSalt = yield bcrypt_1.default.genSalt(10);
         const passwordHash = yield users_models_1.usersModels.passwordHash(password, passwordSalt);
@@ -70,7 +70,8 @@ exports.usersService = {
         const user = yield exports.usersService.getUserByDomain(newUser.uniqueUserDomain);
         return users_models_1.usersModels.userItemModel(user);
     }),
-    checkCredentials: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+    checkCredentials: (loginOrEmail, password) => __awaiter(void 0, void 0, void 0, function* () {
+        return loginOrEmail;
     }),
     editFullNameUser: (domain, fullName) => __awaiter(void 0, void 0, void 0, function* () {
         if (yield users_repository_1.usersRepository.__editFullNameUser(domain, fullName)) {
@@ -83,6 +84,13 @@ exports.usersService = {
     }),
     getUserByDomain: (domain) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield users_repository_1.usersRepository.__getUserByDomain(domain);
+        if (!user) {
+            return undefined;
+        }
+        return users_models_1.usersModels.userItemModel(user);
+    }),
+    getUserById: (id) => __awaiter(void 0, void 0, void 0, function* () {
+        const user = yield users_repository_1.usersRepository.__getUserById(id);
         if (!user) {
             return undefined;
         }

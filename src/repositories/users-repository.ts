@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { client } from "../db/database";
 import { usersItemType } from "../types/usersType";
 
@@ -41,7 +42,11 @@ export const usersRepository = {
         return await client.db("LinkApp").collection("users").findOne({login: login});
     },
 
-    __getUserByEmail: async (email: string): Promise<usersItemType> => {
-        return await client.db("LinkApp").collection("users").findOne({email: email})
+    __getUserByLoginOrEmail: async (loginOrEmail: string): Promise<usersItemType> => {
+        return await client.db("LinkApp").collection("users").findOne({$or: [{login: loginOrEmail}, {email: loginOrEmail}]})
+    },
+
+    __getUserById: async (id: ObjectId | null): Promise<usersItemType> => {
+        return await client.db("LinkApp").collection("users").findOne({_id: id});
     }
 }

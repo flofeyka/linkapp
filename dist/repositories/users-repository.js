@@ -42,7 +42,10 @@ exports.usersRepository = {
     __getUserByLogin: (login) => __awaiter(void 0, void 0, void 0, function* () {
         return yield database_1.client.db("LinkApp").collection("users").findOne({ login: login });
     }),
-    __getUserByEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield database_1.client.db("LinkApp").collection("users").findOne({ email: email });
+    __getUserByLoginOrEmail: (loginOrEmail) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield database_1.client.db("LinkApp").collection("users").findOne({ $or: [{ login: loginOrEmail }, { email: loginOrEmail }] });
+    }),
+    __getUserById: (id) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield database_1.client.db("LinkApp").collection("users").findOne({ _id: id });
     })
 };

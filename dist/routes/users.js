@@ -49,10 +49,6 @@ const usersRoutes = () => {
             result: resultsRequests_1.requestsResults.NOT_FOUND
         });
     }));
-    router.post("/", (0, validationMiddlewares_1.validationMiddleware)(express_validator_1.body, "fullName"), (0, validationMiddlewares_1.validationMiddleware)(express_validator_1.body, "domain"), validationMiddlewares_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield users_service_1.usersService.createUser(req.body.fullName, req.body.login, req.body.email, req.body.password);
-        result && res.json(result);
-    }));
     return router;
 };
 exports.default = usersRoutes;

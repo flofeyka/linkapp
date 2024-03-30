@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { usersRepository } from "../../repositories/users-repository"
 import { usersItemType } from "../../types/usersType";
 import { usersModels } from "./users-models";
@@ -18,17 +19,17 @@ export const usersService = {
         })
     },
 
-    createUser: async (fullName: string, login: string, email: string, password: string):Promise<usersViewItemType | string> => {
+    createUser: async (fullName: string, login: string, email: string, password: string):Promise<usersViewItemType | undefined> => {
         if(await usersRepository.__getUserByDomain(login) || await usersRepository.__getUserByLogin(login)) {
-            return "Login already exists"
-        } else if(await usersRepository.__getUserByEmail(email)) {
-            return "E-mail already exists"
+            return undefined
+        } else if(await usersRepository.__getUserByLoginOrEmail(email)) {
+            return undefined
         }
 
         const passwordSalt = await bcrypt.genSalt(10);
         const passwordHash = await usersModels.passwordHash(password, passwordSalt)
 
-        const newUser:usersItemType = {
+        const newUser = {
             uniqueUserDomain: login,
             email: email, 
             login: login,
@@ -79,6 +80,14 @@ export const usersService = {
 
     getUserByDomain: async (domain: string):Promise<usersViewItemType | undefined> => {
         const user:usersItemType = await usersRepository.__getUserByDomain(domain);
+        if (!user) {
+            return undefined;
+        }
+        return usersModels.userItemModel(user);
+    },
+
+    getUserById: async (id: ObjectId | null):Promise<usersViewItemType | undefined> => {
+        const user = await usersRepository.__getUserById(id);
         if (!user) {
             return undefined;
         }

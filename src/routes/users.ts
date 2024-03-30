@@ -4,6 +4,7 @@ import { usersService } from "../domain/users/users-service";
 import { body, param } from "express-validator";
 import { inputValidationMiddleware, validationMiddleware } from "../middlewares/validationMiddlewares";
 import { requestsResults } from "../utils/resultsRequests";
+import { jwtService } from "../application/jwt-service";
 
 
 const usersRoutes = () => {
@@ -50,12 +51,6 @@ const usersRoutes = () => {
                 result: requestsResults.NOT_FOUND
             })
 
-        });
-
-    router.post("/", validationMiddleware(body, "fullName"), validationMiddleware(body, "domain"),
-        inputValidationMiddleware, async (req: Request, res: Response) => {
-            const result = await usersService.createUser(req.body.fullName, req.body.login, req.body.email, req.body.password);
-            result && res.json(result)
         });
 
     return router;
