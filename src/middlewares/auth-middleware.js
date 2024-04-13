@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
         const accessToken = authHeader.split(' ')[1];
         const userData = tokenService.validateAccessToken(accessToken);
 
-        if (!authHeader || !accessToken || userData) {
+        if (!authHeader || !accessToken || !userData) {
             return next(ApiError.unAuthorizedError());
         }
 

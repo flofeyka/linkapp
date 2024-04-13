@@ -58,7 +58,7 @@ class authController {
     async refresh(req, res, next) {
         try {
             const { refreshToken } = req.cookies;
-            const userData = await usersService.refreshToken(refreshToken);
+            const userData = await usersService.refresh(refreshToken);
             res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
 
             return res.json(userData);
@@ -66,6 +66,14 @@ class authController {
             next(e)
         }
 
+    }
+
+    async getUsersData() {
+        try {
+
+        } catch(e) {
+
+        }
     }
 }
 

@@ -17,5 +17,7 @@ authRouter.get("/activate/:link", authController.activate);
 
 authRouter.get("/refresh", authController.refresh);
 
+authRouter.get("/getUsersData", authController.getUsersData)
+
 module.exports = authRouter;
 
