@@ -3,10 +3,14 @@ const TaskDto = require("../dtos/task-dto")
 
 class tasksService {
     async getTaskById(id) {
-        return await tasksModel.findOne({id});
+        const taskResult = await tasksModel.findOne({id});
+        const taskDTO = new TaskDto(taskResult);
+        return taskDTO;
     }
     async getTasks(userId) {
-        return await tasksModel.find({userId});
+        const taskDTOresult = await tasksModel.find({userId});
+        const taskDTOs = taskDTOresult.map(task => new TaskDto(task));
+        return taskDtos;
     }
 
     async addTask(userId, name, isPinned = false, taskMessage) {

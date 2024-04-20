@@ -50,6 +50,24 @@ class postsController {
             next(e);
         }
     }
+
+    async pinPost(req, res, next) {
+        try {
+            const pinnedPostResult = await postService.pinPost(req.params.id);
+            return res.json(pinnedPostResult ? Results.successful("Post pinned successfully") : Results.unsuccessful())
+        } catch(e) {
+            next(e);
+        }
+    }
+
+    async unPinPost(req, res, next) {
+        try { 
+            const unPinnedPostResult = await postService.unPinPost(req.params.id);
+            return res.json(unPinnedPostResult ? Results.successful("Post unpinned successfully") : Results.unsuccessful());
+        } catch(e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new postsController();

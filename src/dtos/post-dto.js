@@ -1,12 +1,13 @@
 module.exports = class PostDto {
     id;
+    name;
     userId;
     message;
     isPinned;
     isChanged;
     date;
 
-    constructor(model) {
+    constructor (model) {
         this.id = model._id;
         this.userId = model.userId;
         this.message = model.message;

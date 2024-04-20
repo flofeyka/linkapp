@@ -11,3 +11,5 @@ postsRouter.get("/getUsers/:userId", postsController.getUsersPosts);
 postsRouter.post("/create", authMiddleWare, postsController.createPost);
 postsRouter.put("/change", authMiddleWare, postsMiddleware, postsController.editPost);
 postsRouter.delete("/delete/:id", authMiddleWare, postsMiddleware, postsController.deletePost);
+postsRouter.post("/pin/:id", authMiddleWare, postsMiddleware, postsController.pinPost);
+postsRouter.delete("/unpin/:id", authMiddleWare, postsMiddleware, postsController.unPinPost);

@@ -8,7 +8,7 @@ module.exports = new class Results {
 
     unsuccessful(message = "Error") {
         return {
-            resultCode: 0,
+            resultCode: 10,
             message: message
         }
     }

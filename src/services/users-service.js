@@ -1,21 +1,30 @@
-const usersModel = require("../models/users-model");
-const bcrypt = require("bcrypt");
-const uuid = require("uuid");
-const mailService = require("./mail-service");
-const tokenService = require("./token-service");
-const UserDto = require("../dtos/user-dto");
-const ApiError = require("../exceptions/api-error");
+const usersModel = require('../models/users-model');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+const mailService = require('./mail-service');
+const tokenService = require('./token-service');
+const UserDto = require('../dtos/user-dto');
+const ApiError = require('../exceptions/api-error');
 
 class usersService {
-    async register(email, password) {
+    async getUserById(id) {
+        const user = await usersModel.findOne({ _id: id });
+        if (!user) {
+            throw ApiError.BadRequest('User not found');
+        }
+        const userDto = new UserDto(user);
+        return userDto;
+    }
+
+    async register(email, password, name) {
         const candidate = await usersModel.findOne({ email });
         if (candidate) {
             throw ApiError.BadRequest(`User with email ${email} already exists`);
         }
         const passwordHash = await bcrypt.hash(password, 10)
         const activationLink = uuid.v4();
-        const user = await usersModel.create({ email, password: passwordHash, activationLink });
-        await mailService.sendActivationMail(email, `${process.env.API_URL}/activate/${activationLink}`);
+        const user = await usersModel.create({ email, password: passwordHash, activationLink, name });
+        // await mailService.sendActivationMail(email, `${process.env.API_URL}/activate/${activationLink}`);
 
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({ ...userDto });
