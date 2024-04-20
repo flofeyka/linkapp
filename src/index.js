@@ -6,17 +6,21 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const usersRouter = require('./routes/usersRouter');
 const tasksRouter = require("./routes/tasksRouter");
+const postsRouter = require("./routes/postsRouter");
 const errorMiddleware = require('./middlewares/error-middleware');
-
 const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({
+    credentials: true, 
+    origin: process.env.CLIENT_URL
+}))
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/tasks", tasksRouter);
+app.use("/posts", postsRouter)
 app.use(errorMiddleware)
 
 

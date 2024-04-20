@@ -3,12 +3,10 @@ const TaskDto = require("../dtos/task-dto")
 
 class tasksService {
     async getTaskById(id) {
-        const task = await tasksModel.findOne({id});
-        return task;
+        return await tasksModel.findOne({id});
     }
     async getTasks(userId) {
-        const tasksFound = await tasksModel.find({userId});
-        return tasksFound;
+        return await tasksModel.find({userId});
     }
 
     async addTask(userId, name, isPinned = false, taskMessage) {
@@ -27,7 +25,7 @@ class tasksService {
 
     async deleteTask(taskId) {
         const deletedTask = await tasksModel.deleteOne({_id: taskId});
-        return deletedTask.deletedCount;
+        return deletedTask.deletedCount === 1;
     }
 
     async pinTask(taskId) {

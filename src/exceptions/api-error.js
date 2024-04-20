@@ -16,7 +16,7 @@ module.exports = class ApiError extends Error {
         return new ApiError(400, message, errors);
     }
 
-    static InvalidTaskId(message) {
-        return new ApiError(400, "Invalid task id")
+    static InvalidId() {
+        return new ApiError(400, "Invalid id")
     }
 }

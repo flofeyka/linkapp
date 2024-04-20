@@ -1,6 +1,13 @@
 const Router = require("express");
 const authMiddleWare = require("../middlewares/auth-middleware");
+const postsController = require("../controllers/postsController");
+const postsMiddleware = require("../middlewares/post-middleware")
 
-export const postsRouter = Router({});
+const postsRouter = Router({});
+module.exports = postsRouter;
 
-postsRouter.get("/:id", authMiddleWare)
+postsRouter.get("/getOne/:id", postsController.getPostById);
+postsRouter.get("/getUsers/:userId", postsController.getUsersPosts);
+postsRouter.post("/create", authMiddleWare, postsController.createPost);
+postsRouter.put("/change", authMiddleWare, postsMiddleware, postsController.editPost);
+postsRouter.delete("/delete/:id", authMiddleWare, postsMiddleware, postsController.deletePost);
