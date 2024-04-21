@@ -1,7 +1,7 @@
 const {Schema, model} = require("mongoose");
 
 const tasksModel = new Schema({
-    userId: { type: Schema.Types.ObjectId, ref: "User"},
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true},
     name: {type: String, required: true},
     isPinned: {type: Boolean},
     taskMessage: {type: String, required: true}
