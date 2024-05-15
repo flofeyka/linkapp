@@ -1,12 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const authRouter = require('./routes/authRouter');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const authRouter = require('./routes/authRouter');
 const usersRouter = require('./routes/usersRouter');
 const tasksRouter = require("./routes/tasksRouter");
 const postsRouter = require("./routes/postsRouter");
+const commentsRouter = require('./routes/commentsRouter');
 const errorMiddleware = require('./middlewares/error-middleware');
 const app = express();
 const PORT = process.env.PORT;
@@ -20,7 +21,8 @@ app.use(cors({
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/tasks", tasksRouter);
-app.use("/posts", postsRouter)
+app.use("/posts", postsRouter);
+app.use("/comments", commentsRouter);
 app.use(errorMiddleware)
 
 

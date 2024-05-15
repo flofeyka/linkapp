@@ -10,7 +10,7 @@ class tasksService {
     async getTasks(userId) {
         const taskDTOresult = await tasksModel.find({userId});
         const taskDTOs = taskDTOresult.map(task => new TaskDto(task));
-        return taskDtos;
+        return taskDTOs;
     }
 
     async addTask(userId, name, isPinned = false, taskMessage) {

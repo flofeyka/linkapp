@@ -8,6 +8,11 @@ module.exports = new class commentsService {
         return comments.map(comment => new commentDto(comment));
     }
 
+    async getCommentById(id) {
+        const comment = await commentsModel.findOne({_id: id});
+        return new commentDto(comment);
+    }
+
     async createComment(postId, userId, message, isChanged = false, isPinned = false) {
         const newComment = await commentsModel.create({
             postId,
@@ -24,13 +29,15 @@ module.exports = new class commentsService {
     }
 
     async deleteComment(id) {
+        const commentFound = await commentsModel.findOne({_id: id});
+        const postId = commentFound.postId;
         const deletedComment = await commentsModel.deleteOne({_id: id});
         await postsModel.updateOne({_id: postId}, {$pull: {comments: id}});
         return deletedComment.deletedCount === 1;
     }
 
     async editComment(id, message) {
-        const editedComment = await commentsModel.updateOne({_id: id}, {message});
+        const editedComment = await commentsModel.updateOne({_id: id}, {message: message});
         await commentsModel.updateOne({_id: id}, {isChanged: true});
         return editedComment.modifiedCount === 1;
     }
