@@ -5,6 +5,7 @@ module.exports = class PostDto {
     message;
     isPinned;
     isChanged;
+    comments;
     date;
 
     constructor (model) {
@@ -13,6 +14,7 @@ module.exports = class PostDto {
         this.message = model.message;
         this.isPinned = model.isPinned;
         this.isChanged = model.isChanged;
+        this.comments = model.comments;
         this.date = model.date;
     }
 }
