@@ -4,5 +4,5 @@ const usersRouter = Router({});
 module.exports = usersRouter;
 
 usersRouter.get("/", (req, res) => {
-    res.send("Hello from usersRouter");
+  res.send("Hello from usersRouter");
 });

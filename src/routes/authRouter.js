@@ -4,10 +4,12 @@ const { body } = require("express-validator");
 
 const authRouter = Router({});
 
-authRouter.post("/register",
-    body("email").isEmail().trim().notEmpty().withMessage("Email is required"),
-    body("password").isLength({ min: 8, max: 32 }),
-    authController.register);
+authRouter.post(
+  "/register",
+  body("email").isEmail().trim().notEmpty().withMessage("Email is required"),
+  body("password").isLength({ min: 8, max: 32 }),
+  authController.register
+);
 
 authRouter.post("/login", authController.login);
 
@@ -18,4 +20,3 @@ authRouter.get("/activate/:link", authController.activate);
 authRouter.get("/refresh", authController.refresh);
 
 module.exports = authRouter;
-
