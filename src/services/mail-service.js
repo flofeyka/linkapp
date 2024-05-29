@@ -16,7 +16,7 @@ class mailService {
   async sendActivationMail(to, link) {
     await this.transporter.sendMail({
       from: process.env.SMTP_USER,
-      to,
+      to: to,
       subject: "Activation email in LinkApp",
       text: "",
       html: `
