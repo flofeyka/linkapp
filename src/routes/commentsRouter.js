@@ -30,5 +30,15 @@ commentsRouter.delete(
   commentsMiddleware,
   commentsController.deleteComment
 );
-commentsRouter.post("/pin/:commentId", authMiddleware, postsMiddleware, commentsController.pinComment);
-commentsRouter.delete("/unpin/:commentId", authMiddleware, postsMiddleware, commentsController.unPinComment);
+commentsRouter.post(
+  "/pin/:commentId",
+  authMiddleware,
+  postsMiddleware,
+  commentsController.pinComment
+);
+commentsRouter.delete(
+  "/unpin/:commentId",
+  authMiddleware,
+  postsMiddleware,
+  commentsController.unPinComment
+);
