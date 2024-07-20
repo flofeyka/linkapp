@@ -28,6 +28,7 @@ const getFollowing = async (req, res) => {
     });
 }
 
+
 module.exports = {
     follow: CtrlWrapper(follow),
     unFollow: CtrlWrapper(unFollow),
