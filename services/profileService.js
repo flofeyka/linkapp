@@ -1,4 +1,4 @@
-const ClosedProfileDto = require("../dtos/СlosedProfileDto");
+const ClosedProfileDto = require("../dtos/ClosedProfileDto");
 const UserDto = require("../dtos/UserDto");
 const ApiError = require("../exceptions/ApiError");
 const User = require("../models/User");
