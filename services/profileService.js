@@ -1,4 +1,4 @@
-const ClosedProfileDto = require("../dtos/СlosedProfileDto");
+const ClosedProfileDto = require("../dtos/ClosedProfileDto");
 const UserDto = require("../dtos/UserDto");
 const ApiError = require("../exceptions/ApiError");
 const User = require("../models/User");
@@ -68,7 +68,7 @@ const profileService = {
         ]);
 
         result = result[0];
-        result.metaData = { ...result.metaData[0], count: result.data.length };
+        result.metaData = { ...result.metaData[0] };
 
         const me = await User.findById(userId);
 
@@ -90,7 +90,10 @@ const profileService = {
         }
 
 
-        return usersDtos;
+        return {
+            ...result.metaData,
+            users: usersDtos
+        };
     }
 }
 
