@@ -17,7 +17,14 @@ const updateProfile = async (req, res) => {
     )
 }
 
+const getUsers = async (req, res) => {
+    const {term, isFollowing, isFollowed, page, pageSize} = req.query;
+    const users = await profileService.getUsersList(term, isFollowing, isFollowed, req.user.id, page, pageSize);
+    return res.json(users);
+}
+
 module.exports = {
     getUserById: CtrlWrapper(getUserById),
-    updateProfile: CtrlWrapper(updateProfile)
+    updateProfile: CtrlWrapper(updateProfile),
+    getUsers: CtrlWrapper(getUsers)
 }

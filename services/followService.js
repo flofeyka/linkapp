@@ -4,44 +4,46 @@ const User = require("../models/User");
 const followService = {
     async follow(userId, id) {
         const userFound = await User.findById(id);
+        const me = await User.findById(userId);
         if (!userFound) {
             throw ApiError.NotFound("Following user is not found");
         }
 
-        if (userFound.followers.includes(userId)) {
+        if (userFound.followers.includes(me._id)) {
             throw ApiError.BadRequest("User is following already");
         }
 
-        if (userId === id) {
+        if (me._id === userFound._id) {
             throw ApiError.BadRequest("You cannot following yourself");
         }
 
         try {
-            await this.__updateFollowings(userId, id, true);
+            await this.__updateFollowings(me._id, userFound._id, true);
             return true;
         } catch (error) {
             console.log(error);
-            await this.__updateFollowings(userId, id, false); // Отмена изменений
+            await this.__updateFollowings(me._id, userFound._id, false); // Отмена изменений
             throw ApiError.BadRequest("Following failed");
         }
     },
 
     async unfollow(userId, id) {
         const userFound = await User.findById(id);
+        const me = await User.findById(userId);
         if (!userFound) {
             throw ApiError.NotFound("Following user is not found");
         }
 
-        if (!userFound.followers.includes(userId)) {
+        if (!userFound.followers.includes(me._id)) {
             throw ApiError.BadRequest("User is not following already");
         }
 
         try {
-            await this.__updateFollowings(userId, id, false);
+            await this.__updateFollowings(me._id, userFound._id, false);
             return true;
         } catch (error) {
             console.log(error);
-            await this.__updateFollowings(userId, id, true); // Возврат к предыдущему состоянию
+            await this.__updateFollowings(me._id, userFound._id, true); // Возврат к предыдущему состоянию
             throw ApiError.BadRequest("Unfollowing failed");
         }
     },
