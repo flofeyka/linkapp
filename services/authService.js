@@ -75,12 +75,12 @@ const authService = {
       throw HttpError(400, 'User with this email does not exist');
     }
 
-    const FIVE_MINUTES = 5 * 60 * 1000;
+    const FIFTH_MINUTES = 15 * 60 * 1000;
     const now = Date.now();
 
     const tokenFound = await ResetToken.findOne({ user: existingUser._id });
 
-    if (tokenFound.requestedAt && now - tokenFound.requestedAt < FIVE_MINUTES) {
+    if (tokenFound && tokenFound.requestedAt && now - tokenFound.requestedAt < FIFTH_MINUTES) {
       throw ApiError.BadRequest('Password reset was already requested, wait for 15 minutes');
     }
 
@@ -144,7 +144,6 @@ const authService = {
       password: newPasswordHashed
     });
 
-    console.log(userUpdated);
 
     if(userUpdated.modifiedCount !== 1) {
       throw ApiError.BadRequest("Error while password reseting");

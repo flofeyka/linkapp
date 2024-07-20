@@ -75,7 +75,7 @@ const tokenService = {
 
         const now = Date.now();
         const ONE_DAY = 24 * 60 * 60 * 1000;
-        if (now - tokenFound.requestedAt < ONE_DAY) {
+        if (now - tokenFound.requestedAt > ONE_DAY) {
             throw ApiError.BadRequest("Password reset token is invalid or expired.")
         }
 
