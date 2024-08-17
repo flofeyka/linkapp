@@ -56,7 +56,7 @@ export class PostsService {
     return await this.postRepository.findByPk(id);
   }
 
-  async getUsersPosts(userId: number): Promise<PostModel[]> {
+  async getUsersPosts(userId: number) {
     // const postsFound = await this.postRepository.findAll({
     //   userId: userId
     // });
