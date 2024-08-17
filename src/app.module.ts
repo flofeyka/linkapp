@@ -24,7 +24,8 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [User, PostModel],
-      autoLoadModels: true
+      autoLoadModels: true,
+      dialectOptions: { ssl: { require: true } },
     })
     ,UsersModule, PostsModule, AuthModule],
 })
